@@ -2,7 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -10,17 +10,19 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const app = express();
+const PORT = 5000;
 
 // Models
 const User = require('./models/User');
 const Task = require('./models/Task');
+
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.resolve('./views'));
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI).then(() => console.log('MongoDB connected'));
@@ -41,7 +43,15 @@ app.get('/', checkAuth, async (req, res) => {
   if (req.user && req.user.role === 'user') {
     tasks = await Task.find({ userId: req.user.id });
   }
-  res.render('index', { user: req.user, tasks });
+  res.render('tasks', { user: req.user, tasks });
+});
+
+app.get('/register', (req, res) => {
+  res.render('register');
+});
+
+app.get('/login', (req, res) => {
+  res.render('login');
 });
 
 app.post('/register', async (req, res) => {
@@ -70,4 +80,4 @@ app.post('/tasks', checkAuth, async (req, res) => {
   res.redirect('/');
 });
 
-app.listen(5000, () => console.log('Server running on http://localhost:5000'));
+app.listen(PORT, () => console.log(`Server started at PORT : ${PORT}`));

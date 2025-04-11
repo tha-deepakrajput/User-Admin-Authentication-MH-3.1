@@ -1,4 +1,3 @@
-<!-- views/index.ejs -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,25 +13,6 @@
   </style>
 </head>
 <body>
-  <section>
-    <h2>Register</h2>
-    <form action="/register" method="POST">
-      <input type="text" name="name" placeholder="Name" required />
-      <input type="email" name="email" placeholder="Email" required />
-      <input type="password" name="password" placeholder="Password" required />
-      <button type="submit">Register</button>
-    </form>
-  </section>
-
-  <section>
-    <h2>Login</h2>
-    <form action="/login" method="POST">
-      <input type="email" name="email" placeholder="Email" required />
-      <input type="password" name="password" placeholder="Password" required />
-      <button type="submit">Login</button>
-    </form>
-  </section>
-
   <% if (user) { %>
   <section>
     <h2>Create Task</h2>
