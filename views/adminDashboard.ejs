@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks</title>
+    <style>
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            background-color: #f5f6fa;
+            margin: 0;
+            padding: 0;
+            color: #2f3640;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #dcdde1;
+            border-radius: 0 6px 20px #353b48;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #353b48;
+            font-size: 28px;
+        }
+
+        form {
+            margin-top: 25px;
+            background-color: #f5f6fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #dce3e8;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #cbd5df;
+            border-radius: 6px;
+            font-size: 16px;
+            background-color: #f5f6fa;
+            transition: border 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            border-color: #74512D;
+            outline: none;
+        }
+
+        button {
+            background-color: #74512D;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #52381e;
+        }
+
+        .task {
+            background-color: #f2f6f9;
+            padding: 18px;
+            margin-top: 15px;
+            border-left: 5px solid #74512D;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .task:hover {
+            background-color: #e6f0f9;
+        }
+
+        .task strong {
+            display: block;
+            font-size: 20px;
+            color: #222;
+        }
+
+        .task i {
+            font-style: italic;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .task p {
+            margin-top: 8px;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        a {
+            color: #74512D;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <% if (user) { %>
+        <h2>Welcome <%= user.name %> (Role : <%= user.role %>) </h2>
+
+        <!-- TASK FORM  -->
+        <form action="/tasks" method="post">
+            <input type="text" name="title" placeholder="Title" required>
+            <textarea name="description" placeholder="Description" required></textarea>
+            <button type="submit">Create Task</button>
+        </form>
+
+        <h2>Your Tasks</h2>
+        
+        <% const adminTasks = tasks.filter(task => task.userId?._id?.toString() === user.id); %>
+
+        <% if (adminTasks.length === 0) { %>
+        <p>No tasks yet.</p>
+        <% } else { %> 
+            <% adminTasks.forEach(task => { %>
+                <div class="task">
+                    <strong> <%= task.title %> </strong>
+                    <p> <%= task.description %> </p>
+                </div>
+            <% }) %> 
+        <% } %>
+
+        <h3>All User's Tasks</h3>
+        <% const otherTasks = tasks.filter(task => task.userId?._id?.toString() !== user.id); %>
+
+        <% if (otherTasks.length === 0) { %>
+            <p>No User tasks found.</p>
+        <% } else { %>
+            <% otherTasks.forEach(task => { %>
+                <div class="task">
+                    <strong> <%= task.title %> </strong>
+                    <i> By: <%= task.userId?.name || 'Unknown' %> (<%= task.userId?.email || 'N/A' %>) </i>
+                    <p> <%= task.description %> </p>
+                </div>
+            <% }) %>
+        <% } %> 
+
+        <% } else { %> 
+            <p>You are not authorised to view this page.</p>
+            <p>
+                <a href="/login">Login</a> or <a href="/register">Register</a> to continue. 
+            </p>
+        <% } %>
+    </div>
+</body>
+</html>
