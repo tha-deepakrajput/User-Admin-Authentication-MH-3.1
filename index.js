@@ -13,7 +13,7 @@ const connectDB = require("./config/Db");
 
 dotenv.config();
 
-const PORT = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
 const app = express();
 
 // MODELS : 
@@ -128,4 +128,4 @@ app.post("/tasks", checkAuth, async (req, res) => {
     }
 });
 
-app.listen(PORT, () => console.log(`Server started at PORT: ${PORT}`));
+app.listen(PORT, () => console.log(`Server started at PORT: ${port}`));
