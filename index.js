@@ -9,7 +9,7 @@ const dotenv = require("dotenv");
 const authRoutes = require("./routes/auth");
 const taskRoutes = require("./routes/tasks");
 const { authenticateJWT } = require("./middleware/auth");
-const connectDB = require("./config/db");
+const connectDB = require("./config/Db");
 
 dotenv.config();
 
