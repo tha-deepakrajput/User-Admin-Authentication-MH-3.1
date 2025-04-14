@@ -9,6 +9,7 @@ const dotenv = require("dotenv");
 const authRoutes = require("./routes/auth");
 const taskRoutes = require("./routes/tasks");
 const { authenticateJWT } = require("./middleware/auth");
+const connectDB = require("./config/db");
 
 dotenv.config();
 
@@ -29,10 +30,7 @@ app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
 
 // CONNECT TO MONGODB : 
-mongoose
-    .connect(process.env.Mongo_URL)
-    .then(() => console.log("MongoDB connected"))
-    .catch((err) => console.error(err));
+connectDB();
 
 app.use("/api/auth", authRoutes);
 app.use("/api/tasks", authenticateJWT, taskRoutes);
