@@ -12,7 +12,7 @@ const { authenticateJWT } = require("./middleware/auth");
 
 dotenv.config();
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 const app = express();
 
 // MODELS : 
