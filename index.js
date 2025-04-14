@@ -128,4 +128,4 @@ app.post("/tasks", checkAuth, async (req, res) => {
     }
 });
 
-app.listen(PORT, () => console.log(`Server started at PORT: ${port}`));
+app.listen(port, () => console.log(`Server started at PORT: ${port}`));
