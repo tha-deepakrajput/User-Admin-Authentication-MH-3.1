@@ -52,7 +52,7 @@ const checkAuth = (req, res, next) => {
 
 // ROUTES : 
 app.get('/', (req, res) => {
-    res.render("/register");
+    res.render("register");
 });
 
 app.get("/register", (req, res) => {
