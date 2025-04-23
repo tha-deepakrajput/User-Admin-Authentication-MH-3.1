@@ -64,6 +64,10 @@ app.get("/login", (req, res) => {
     res.render("login");
 });
 
+app.get("/logout", (req, res) => {
+    res.render("/");
+})
+
 app.post("/register", async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -127,5 +131,10 @@ app.post("/tasks", checkAuth, async (req, res) => {
         return res.redirect("/user/dashboard");
     }
 });
+
+app.get("/tasks/logout", (req, res) => {
+    res.clearCookie("token", { httpOnly: true });
+    res.redirect("/login");
+})
 
 app.listen(port, () => console.log(`Server started at PORT: ${port}`));

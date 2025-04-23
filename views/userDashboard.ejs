@@ -65,6 +65,18 @@
             transition: background 0.3s ease;
         }
 
+        .logout {
+            background-color: #C5172E;
+            text-decoration: none;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
         button:hover {
             background-color: #74512D;
         }
@@ -104,6 +116,7 @@
 <body>
     <div class="container">
         <% if (user) { %>
+            <a href="/tasks/logout" class="logout">LogOut</a>
         <h2>Welcome <%= user.name %> (Role : <%= user.role %>) </h2>
 
         <!-- TASK FORM  -->
